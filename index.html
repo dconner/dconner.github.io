@@ -127,7 +127,7 @@
 	}); 
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= geometry.parameters.height/2
-	//arWorldRoot.add( mesh );
+	arWorldRoot.add( mesh );
 	var loader = new THREE.STLLoader();
 	// Binary files
 	var material = new THREE.MeshPhongMaterial( { color: 0xAAAAAA, specular: 0x111111, shininess: 200 } );
@@ -138,8 +138,6 @@
 	   meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
 	}
 	var mesh = new THREE.Mesh( geometry, meshMaterial );
-        
-       mesh.position.y = geometry.parameters.height/2
 	mesh.position.set( 0.5, -0.5, 0 );
 	mesh.rotation.set( - Math.PI / 2, 0, 0);
 	mesh.scale.set( 0.1, 0.1, 0.1 );
