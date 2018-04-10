@@ -9,18 +9,13 @@
 <script src="js/loaders/STLLoader.js"></script>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
-	
+	<a href="https://github.com/jeromeetienne/AR.js/" target="_blank">AR.js</a> - three.js mobile performance
 	<br/>
-    <button id="mybutton" style="display:none:" onclick="hello()">Hello</button>
-    
-	<script>
-        var mysize =1;
-    function hello(){
-          mysize *=1.1;}
+	Contact me any time at <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
+</div><script>
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
 	//////////////////////////////////////////////////////////////////////////////////
-
 	// init renderer
 	var renderer	= new THREE.WebGLRenderer({
 		// antialias	: true,
@@ -33,38 +28,30 @@
 	renderer.domElement.style.top = '0px'
 	renderer.domElement.style.left = '0px'
 	document.body.appendChild( renderer.domElement );
-
 	// array of functions for the rendering loop
 	var onRenderFcts= [];
-
 	// init scene and camera
 	var scene	= new THREE.Scene();
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Initialize a basic camera
 	//////////////////////////////////////////////////////////////////////////////////
-
 	// Create a camera
 	var camera = new THREE.Camera();
 	scene.add(camera);
-
 	////////////////////////////////////////////////////////////////////////////////
 	//          handle arToolkitSource
 	////////////////////////////////////////////////////////////////////////////////
-
 	var arToolkitSource = new THREEx.ArToolkitSource({
 		// to read from the webcam 
 		sourceType : 'webcam',
-
 		// to read from an image
 		// sourceType : 'image',
 		// sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg',		
-
 		// to read from a video
 		// sourceType : 'video',
 		// sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/videos/headtracking.mp4',		
 	})
-
 	arToolkitSource.init(function onReady(){
 		onResize()
 	})
@@ -84,7 +71,6 @@
 	//          initialize arToolkitContext
 	////////////////////////////////////////////////////////////////////////////////
 	
-
 	// create atToolkitContext
 	var arToolkitContext = new THREEx.ArToolkitContext({
 		cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
@@ -98,11 +84,9 @@
 		// copy projection matrix to camera
 		camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
 	})
-
 	// update artoolkit on every frame
 	onRenderFcts.push(function(){
 		if( arToolkitSource.ready === false )	return
-
 		arToolkitContext.update( arToolkitSource.domElement )
 	})
 	
@@ -118,7 +102,6 @@
 		patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/trex.patt'
 		// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
 	})
-
 	// build a smoothedControls
 	var smoothedRoot = new THREE.Group()
 	scene.add(smoothedRoot)
@@ -127,19 +110,14 @@
 		lerpQuaternion: 0.3,
 		lerpScale: 1,
 	})
-    
 	onRenderFcts.push(function(delta){
 		smoothedControls.update(markerRoot)
 	})
 	//////////////////////////////////////////////////////////////////////////////////
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
-
-    var loader = new THREE.STLLoader();
-
-
+        var loader = new THREE.STLLoader();
 	var arWorldRoot = smoothedRoot
-
 	// add a torus knot	
 	var geometry	= new THREE.CubeGeometry(1,1,1);
 	var material	= new THREE.MeshNormalMaterial({
@@ -150,49 +128,36 @@
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= geometry.parameters.height/2
 	//arWorldRoot.add( mesh );
-
-
 	var loader = new THREE.STLLoader();
 	// Binary files
-
 	var material = new THREE.MeshPhongMaterial( { color: 0xAAAAAA, specular: 0x111111, shininess: 200 } );
-
 	// Colored binary STL
 	loader.load( './everett.stl', function ( geometry ) {
-
 	var meshMaterial = material;
 	if (geometry.hasColors) {
 	   meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
 	}
-
-	var mesh2 = new THREE.Mesh( geometry, meshMaterial );
-
+	var mesh = new THREE.Mesh( geometry, meshMaterial );
         
-       mesh2.position.y = geometry.parameters.height/2
-
+       mesh.position.y = geometry.parameters.height/2
 	//mesh.position.set( 0.5, -0.5, 0 );
-	mesh2.rotation.set( - Math.PI / 2, 0, 0);
-	mesh2.scale.set( 0.5, 0.5, 0.5 );
-
-	mesh2.castShadow = true;
-	mesh2.receiveShadow = true;
-
-	arWorldRoot.add( mesh2 );
-
+	mesh.rotation.set( - Math.PI / 2, 0, 0);
+	mesh.scale.set( 0.5, 0.5, 0.5 );
+	mesh.castShadow = true;
+	mesh.receiveShadow = true;
+	arWorldRoot.add( mesh );
 	} )
 ;
 	
-	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
-	var material	= new THREE.MeshNormalMaterial(); 
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= 0.5
-	arWorldRoot.add( mesh );
+	//var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
+	//var material	= new THREE.MeshNormalMaterial(); 
+	//var mesh	= new THREE.Mesh( geometry, material );
+	//mesh.position.y	= 0.5
+	//arWorldRoot.add( mesh );
 	
-	onRenderFcts.push(function(){
-        mesh.scale.set(mysize*0.5,mysize*0.5,mysize*0.5);
-		mesh.rotation.x += 0.1
-	})
-
+	//onRenderFcts.push(function(){
+	//	mesh.rotation.x += 0.1
+	//})
 	//////////////////////////////////////////////////////////////////////////////////
 	//		render the whole thing on the page
 	//////////////////////////////////////////////////////////////////////////////////
@@ -203,7 +168,6 @@
 		renderer.render( scene, camera );
 		stats.update();
 	})
-
 	// run the rendering loop
 	var lastTimeMsec= null
 	requestAnimationFrame(function animate(nowMsec){
@@ -218,8 +182,4 @@
 			onRenderFct(deltaMsec/1000, nowMsec/1000)
 		})
 	})
-        
-
-</script>
-
-</body>
+</script></body>
