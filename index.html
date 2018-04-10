@@ -11,11 +11,12 @@
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
 	
 	<br/>
-    <button onclick="hello()">Hello</button>
+    <button id="mybutton" style="display:none:" onclick="hello()">Hello</button>
     
 	<script>
+        var mysize =1;
     function hello(){
-          alert("HELLO");}
+          mysize *=1.1;}
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
 	//////////////////////////////////////////////////////////////////////////////////
@@ -126,6 +127,7 @@
 		lerpQuaternion: 0.3,
 		lerpScale: 1,
 	})
+    
 	onRenderFcts.push(function(delta){
 		smoothedControls.update(markerRoot)
 	})
@@ -133,7 +135,7 @@
 	//		add an object in the scene
 	//////////////////////////////////////////////////////////////////////////////////
 
-        var loader = new THREE.STLLoader();
+    var loader = new THREE.STLLoader();
 
 
 	var arWorldRoot = smoothedRoot
@@ -163,32 +165,33 @@
 	   meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
 	}
 
-	var mesh = new THREE.Mesh( geometry, meshMaterial );
+	var mesh2 = new THREE.Mesh( geometry, meshMaterial );
 
         
-       mesh.position.y = geometry.parameters.height/2
+       mesh2.position.y = geometry.parameters.height/2
 
 	//mesh.position.set( 0.5, -0.5, 0 );
-	mesh.rotation.set( - Math.PI / 2, 0, 0);
-	mesh.scale.set( 0.5, 0.5, 0.5 );
+	mesh2.rotation.set( - Math.PI / 2, 0, 0);
+	mesh2.scale.set( 0.5, 0.5, 0.5 );
 
-	mesh.castShadow = true;
-	mesh.receiveShadow = true;
+	mesh2.castShadow = true;
+	mesh2.receiveShadow = true;
 
-	arWorldRoot.add( mesh );
+	arWorldRoot.add( mesh2 );
 
 	} )
 ;
 	
-	//var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
-	//var material	= new THREE.MeshNormalMaterial(); 
-	//var mesh	= new THREE.Mesh( geometry, material );
-	//mesh.position.y	= 0.5
-	//arWorldRoot.add( mesh );
+	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
+	var material	= new THREE.MeshNormalMaterial(); 
+	var mesh	= new THREE.Mesh( geometry, material );
+	mesh.position.y	= 0.5
+	arWorldRoot.add( mesh );
 	
-	//onRenderFcts.push(function(){
-	//	mesh.rotation.x += 0.1
-	//})
+	onRenderFcts.push(function(){
+        mesh.scale.set(mysize*0.5,mysize*0.5,mysize*0.5);
+		mesh.rotation.x += 0.1
+	})
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		render the whole thing on the page
