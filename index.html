@@ -127,7 +127,9 @@
 	}); 
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= geometry.parameters.height/2
-	arWorldRoot.add( mesh );
+	
+
+        arWorldRoot.add( mesh );
 	var loader = new THREE.STLLoader();
 	// Binary files
 	var material = new THREE.MeshPhongMaterial( { color: 0xAAAAAA, specular: 0x111111, shininess: 200 } );
@@ -146,11 +148,16 @@
 	arWorldRoot.add( mesh2 );
 	} )
 ;
-	
-	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
-	var material	= new THREE.MeshNormalMaterial(); 
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= 0.5
+	var geometry = new THREE.SphereGeometry( 0.3, 32, 32 );
+        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        var sphere = new THREE.Mesh( geometry, material );
+        sphere.position.y =0.5;
+        scene.add( sphere );
+
+	//var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
+	//var material	= new THREE.MeshNormalMaterial(); 
+	//var mesh	= new THREE.Mesh( geometry, material );
+	//mesh.position.y	= 0.5
 	arWorldRoot.add( mesh );
 	
 	onRenderFcts.push(function(){
