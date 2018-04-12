@@ -126,7 +126,7 @@
 		side: THREE.DoubleSide
 	}); 
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= geometry.parameters.height/2
+	mesh.position.y	= geometry.parameters.height/2;
 	
 
         arWorldRoot.add( mesh );
@@ -148,7 +148,7 @@
 	arWorldRoot.add( mesh2 );
 	} )
 ;
-	var geometry = new THREE.SphereGeometry( 0.3, 32, 32 );
+	var geometry = new THREE.SphereGeometry( 10, 32, 32 );
         var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
         var sphere = new THREE.Mesh( geometry, material );
         sphere.position.y =0.5;
