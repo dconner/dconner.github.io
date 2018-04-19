@@ -134,7 +134,7 @@
 	// Binary files
 	var material = new THREE.MeshPhongMaterial( { color: 0xAAAAAA, specular: 0x111111, shininess: 200 } );
 	// Colored binary STL
-	loader.load( './kaseyScan.stl', function ( geometry ) {
+	loader.load( './leo2.stl', function ( geometry ) {
 	var meshMaterial = material;
 	if (geometry.hasColors) {
 	   meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
