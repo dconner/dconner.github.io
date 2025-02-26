@@ -1,31 +1,60 @@
 <!DOCTYPE html>
-<!doctype HTML>
+
 <html>
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aframe-ar@0.2.0/dist/aframe-ar.js"></script>
-<body style="margin: 0px; overflow: hidden;">
 
-<a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">
+<head>
 
-        <a-asset-item id="tree" src="https://raw.githubusercontent.com/dconner/csImages/refs/heads/main/Sunburst.gltf"></a-asset-item>
-	</a-assets>
-    
-    <a-marker type="pattern" url="https://raw.githubusercontent.com/dconner/csImages/refs/heads/main/hawk.patt">
-        <a-entity   position="0 0 0" 
-                    rotation="0 0 0"
-                    scale="0.10 0.10 0.10"
-                    gltf-model="#tree" >
-        </a-entity>
-    </a-marker>
-    
-    <a-entity camera></a-entity>
-    
-</a-scene>
+    <title>GLTF Viewer</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script> 
+
+</head>
+
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+
+        const canvas = document.getElementById('canvas');
+
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+
+        const renderer = new THREE.WebGLRenderer({ canvas });
+
+
+
+        const loader = new THREE.GLTFLoader();
+
+        loader.load('https://raw.githubusercontent.com/dconner/csImages/refs/heads/main/Sunburst.gltf', (gltf) => {
+
+            const model = gltf.scene;
+
+            scene.add(model);
+
+        });
+
+
+
+        camera.position.set(5, 5, 5);
+
+        
+
+        function animate() {
+
+            requestAnimationFrame(animate);
+
+            renderer.render(scene, camera);
+
+        }
+
+
+
+        animate();
+
+    </script>
+
 </body>
-</html>
 
-Pattern Key:
-<img src = "https://raw.githubusercontent.com/dconner/csImages/refs/heads/main/hawk.png">
-</body>
-</html>
